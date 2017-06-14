@@ -51,7 +51,7 @@ namespace jackal_base
 class JackalHardware : public hardware_interface::RobotHW
 {
 public:
-  JackalHardware();
+  JackalHardware(const std::string& vehicle_name);
   void copyJointsFromHardware();
   void publishDriveFromController();
 

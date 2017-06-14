@@ -67,7 +67,13 @@ int main(int argc, char* argv[])
 {
   // Initialize ROS node.
   ros::init(argc, argv, "jackal_node");
-  jackal_base::JackalHardware jackal;
+
+  ros::NodeHandle pnh("~");
+
+  std::string vehicle_name("");
+  pnh.getParam("vehicle_name", vehicle_name);
+
+  jackal_base::JackalHardware jackal(vehicle_name);
 
   // Create the serial rosserial server in a background ASIO event loop.
   std::string port;

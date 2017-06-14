@@ -37,10 +37,28 @@
 namespace jackal_base
 {
 
-JackalHardware::JackalHardware()
+JackalHardware::JackalHardware(const std::string& vehicle_name)
 {
-  ros::V_string joint_names = boost::assign::list_of("front_left_wheel")
-      ("front_right_wheel")("rear_left_wheel")("rear_right_wheel");
+  ros::V_string joint_names;
+  if (vehicle_name.empty())
+  {
+    joint_names = boost::assign::list_of("front_left_wheel")
+          ("front_right_wheel")("rear_left_wheel")("rear_right_wheel");
+  }
+  else
+  {
+    std::string flw_name(vehicle_name);
+    flw_name.append("/front_left_wheel");
+    std::string frw_name(vehicle_name);
+    frw_name.append("/front_right_wheel");
+    std::string rlw_name(vehicle_name);
+    rlw_name.append("/rear_left_wheel");
+    std::string rrw_name(vehicle_name);
+    rrw_name.append("/rear_right_wheel");
+
+    joint_names = boost::assign::list_of(flw_name)
+          (frw_name)(rlw_name)(rrw_name);
+  }
 
   for (unsigned int i = 0; i < joint_names.size(); i++) {
     hardware_interface::JointStateHandle joint_state_handle(joint_names[i],
